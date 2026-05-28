@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СрубМастер — Деревянное строительство</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+
+:root{
+  --cream:#f7f3ec;
+  --cream2:#f0e9dc;
+  --cream3:#e6dccb;
+  --dark:#1c1a16;
+  --dark2:#2a2720;
+  --dark3:#3d3a32;
+  --text:#3a3628;
+  --muted:#7c7668;
+  --muted2:#a89f92;
+  --green:#4a7c35;
+  --green2:#3a6228;
+  --green-light:#edf4e8;
+  --amber:#9a6b1a;
+  --amber-light:#f8f0e0;
+  --border:rgba(60,54,40,0.1);
+  --border2:rgba(60,54,40,0.2);
+  --serif:'Cormorant Garamond',serif;
+  --sans:'Jost',sans-serif;
+}
+
+body{
+  background:var(--cream);
+  color:var(--text);
+  font-family:var(--sans);
+  font-weight:400;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:80px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;
+  transition:background 0.4s,box-shadow 0.4s;
+}
+nav.solid{
+  background:rgba(247,243,236,0.97);
+  backdrop-filter:blur(16px);
+  box-shadow:0 1px 0 var(--border);
+}
+.logo{
+  display:flex;align-items:center;gap:14px;
+  text-decoration:none;
+}
+.logo-mark{
+  width:42px;height:42px;
+  background:var(--dark);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.logo-mark svg{width:24px;height:24px}
+.logo-name{
+  font-family:var(--serif);
+  font-size:22px;font-weight:600;
+  color:var(--dark);letter-spacing:0.02em;
+}
+.logo-name span{color:var(--green)}
+
+.nav-menu{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-menu a{
+  font-size:13px;font-weight:500;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-menu a:hover{color:var(--dark)}
+.nav-phone{
+  font-family:var(--serif);
+  font-size:18px;font-weight:600;
+  color:var(--dark);text-decoration:none;
+  transition:color 0.2s;
+}
+.nav-phone:hover{color:var(--green)}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-left{
+  background:var(--dark);
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:120px 70px 80px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-left-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(74,124,53,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(154,107,26,0.1) 0%, transparent 60%);
+}
+
+.hero-lines{
+  position:absolute;top:0;right:0;bottom:0;
+  width:1px;background:rgba(255,255,255,0.08);
+}
+.hero-lines::before{
+  content:'';position:absolute;
+  top:0;left:-40px;bottom:0;width:1px;
+  background:rgba(255,255,255,0.04);
+}
+
+.hero-eyebrow{
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--green);
+  margin-bottom:28px;
+  position:relative;z-index:1;
+  opacity:0;animation:fadeUp 0.8s 0.3s forwards;
+}
+.hero-eyebrow-line{width:32px;height:1px;background:var(--green)}
+
+.hero-h1{
+  font-family:var(--serif);
+  font-size:clamp(52px,6vw,84px);
+  font-weight:300;
+  line-height:1.0;
+  color:#fff;
+  letter-spacing:-0.01em;
+  margin-bottom:28px;
+  position:relative;z-index:1;
+  opacity:0;animation:fadeUp 0.9s 0.5s forwards;
+}
+.hero-h1 em{
+  font-style:italic;
+  color:rgba(255,255,255,0.45);
+  display:block;
+}
+.hero-h1 strong{
+  font-weight:700;
+  color:#fff;
+}
+
+.hero-desc{
+  font-size:15px;font-weight:300;
+  color:rgba(255,255,255,0.5);
+  max-width:380px;line-height:1.8;
+  margin-bottom:44px;
+  position:relative;z-index:1;
+  opacity:0;animation:fadeUp 0.9s 0.7s forwards;
+}
+
+.hero-actions{
+  display:flex;align-items:center;gap:20px;
+  position:relative;z-index:1;
+  opacity:0;animation:fadeUp 0.9s 0.9s forwards;
+}
+
+.btn-main{
+  background:var(--green);color:#fff;
+  padding:16px 36px;
+  font-family:var(--sans);
+  font-size:12px;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  text-decoration:none;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:background 0.25s,transform 0.15s;
+  position:relative;overflow:hidden;
+}
+.btn-main::after{
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(255,255,255,0.1);
+  transform:translateX(-100%);
+  transition:transform 0.4s;
+}
+.btn-main:hover{background:var(--green2);transform:translateY(-2px)}
+.btn-main:hover::after{transform:translateX(0)}
+
+.btn-outline{
+  font-size:12px;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.5);
+  text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:color 0.2s;
+  border:none;background:none;cursor:pointer;padding:0;
+}
+.btn-outline:hover{color:#fff}
+.btn-outline-arrow{
+  width:36px;height:36px;
+  border:1px solid rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color 0.2s,background 0.2s;
+}
+.btn-outline:hover .btn-outline-arrow{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.05)}
+
+.hero-stats{
+  display:flex;gap:0;
+  margin-top:60px;
+  padding-top:40px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  position:relative;z-index:1;
+  opacity:0;animation:fadeUp 0.9s 1.1s forwards;
+}
+.hero-stat{
+  flex:1;
+  padding-right:28px;
+  border-right:1px solid rgba(255,255,255,0.08);
+  margin-right:28px;
+}
+.hero-stat:last-child{border-right:none;margin-right:0}
+.hero-stat-n{
+  font-family:var(--serif);
+  font-size:38px;font-weight:600;
+  color:#fff;line-height:1;
+  margin-bottom:4px;
+}
+.hero-stat-l{font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.05em}
+
+.hero-right{
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-img{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg, #5a4020 0%, #3a2810 30%, #1e1408 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+
+.hero-img-art{
+  width:100%;height:100%;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Decorative wood grain art */
+.wood-art{
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(
+      8deg,
+      transparent,
+      transparent 18px,
+      rgba(200,160,80,0.04) 18px,
+      rgba(200,160,80,0.04) 19px
+    ),
+    repeating-linear-gradient(
+      -5deg,
+      transparent,
+      transparent 30px,
+      rgba(160,100,40,0.03) 30px,
+      rgba(160,100,40,0.03) 31px
+    );
+}
+
+.hero-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, rgba(28,26,22,0.3) 0%, transparent 40%),
+             linear-gradient(to top, rgba(28,26,22,0.6) 0%, transparent 50%);
+}
+
+.hero-badge-float{
+  position:absolute;
+  bottom:48px;left:40px;
+  background:rgba(247,243,236,0.96);
+  backdrop-filter:blur(8px);
+  padding:20px 24px;
+  border-left:3px solid var(--green);
+  animation:fadeUp 0.9s 1.3s both;
+}
+.hbf-top{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+.hbf-val{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--dark)}
+.hbf-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* Decorative house silhouette */
+.house-silhouette{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:55%;
+  opacity:0.12;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(28px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap{
+  background:var(--dark2);
+  padding:20px 0;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+.marquee-track{
+  display:flex;
+  animation:marquee 20s linear infinite;
+  white-space:nowrap;
+}
+.marquee-item{
+  display:flex;align-items:center;gap:16px;
+  padding:0 40px;
+  font-size:12px;font-weight:500;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+  flex-shrink:0;
+}
+.marquee-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--green);opacity:0.6;
+}
+@keyframes marquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* ─── SECTION BASE ─── */
+.section{padding:120px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 60px}
+
+.eyebrow{
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--green);margin-bottom:16px;
+}
+.eyebrow-line{width:28px;height:1px;background:var(--green)}
+
+h2.display{
+  font-family:var(--serif);
+  font-size:clamp(36px,4vw,58px);
+  font-weight:300;
+  line-height:1.15;
+  color:var(--dark);
+  letter-spacing:-0.01em;
+}
+h2.display strong{font-weight:700}
+h2.display em{font-style:italic;color:var(--muted)}
+
+/* ─── SERVICES ─── */
+.services{background:var(--cream)}
+
+.services-intro{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:end;
+  margin-bottom:72px;
+}
+.services-intro-text p{
+  font-size:16px;font-weight:300;
+  color:var(--muted);line-height:1.9;
+  margin-top:20px;
+}
+
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  background:var(--border);
+}
+
+.svc{
+  background:var(--cream);
+  padding:48px 36px;
+  position:relative;
+  overflow:hidden;
+  transition:background 0.3s;
+  cursor:default;
+}
+.svc::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--amber));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.svc:hover{background:#fff}
+.svc:hover::after{transform:scaleX(1)}
+
+.svc-num{
+  font-family:var(--serif);
+  font-size:56px;font-weight:700;
+  color:var(--cream3);
+  line-height:1;margin-bottom:24px;
+  transition:color 0.3s;
+}
+.svc:hover .svc-num{color:var(--cream2)}
+
+.svc-icon{
+  width:52px;height:52px;margin-bottom:20px;
+}
+.svc-icon svg{width:100%;height:100%}
+
+.svc-title{
+  font-family:var(--serif);
+  font-size:26px;font-weight:600;
+  color:var(--dark);margin-bottom:12px;
+  line-height:1.2;
+}
+.svc-desc{
+  font-size:14px;font-weight:300;
+  color:var(--muted);line-height:1.85;
+  margin-bottom:24px;
+}
+.svc-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:8px;
+}
+.svc-list li{
+  font-size:13px;color:var(--muted);
+  display:flex;align-items:flex-start;gap:10px;
+  line-height:1.5;
+}
+.svc-list li::before{
+  content:'';
+  width:16px;height:1px;background:var(--green);
+  flex-shrink:0;margin-top:8px;
+}
+
+/* ─── ABOUT ─── */
+.about{
+  background:var(--dark);
+  position:relative;overflow:hidden;
+}
+.about-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:100px;align-items:center;
+}
+.about .eyebrow{color:rgba(255,255,255,0.4)}
+.about .eyebrow-line{background:rgba(255,255,255,0.2)}
+.about h2.display{color:#fff}
+.about h2.display em{color:rgba(255,255,255,0.3)}
+
+.about-text{
+  font-size:16px;font-weight:300;
+  color:rgba(255,255,255,0.45);
+  line-height:1.9;margin-top:24px;margin-bottom:40px;
+}
+
+.about-vals{
+  display:flex;flex-direction:column;gap:0;
+  border:1px solid rgba(255,255,255,0.07);
+}
+.about-val{
+  display:flex;align-items:flex-start;gap:24px;
+  padding:28px 32px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  transition:background 0.25s;
+}
+.about-val:last-child{border-bottom:none}
+.about-val:hover{background:rgba(255,255,255,0.03)}
+.about-val-n{
+  font-family:var(--serif);
+  font-size:32px;font-weight:700;
+  color:var(--green);
+  min-width:70px;line-height:1;
+  padding-top:4px;
+}
+.about-val-title{
+  font-family:var(--serif);
+  font-size:17px;font-weight:600;
+  color:#fff;margin-bottom:4px;
+}
+.about-val-desc{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7}
+
+.about-bg-text{
+  position:absolute;
+  right:-40px;top:50%;transform:translateY(-50%);
+  font-family:var(--serif);
+  font-size:240px;font-weight:700;
+  color:rgba(255,255,255,0.015);
+  white-space:nowrap;pointer-events:none;
+  user-select:none;letter-spacing:-0.05em;
+}
+
+/* ─── PROCESS ─── */
+.process{background:var(--cream2)}
+
+.process-steps{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;margin-top:72px;
+  position:relative;
+}
+.process-line{
+  position:absolute;
+  top:28px;left:10%;right:10%;
+  height:1px;background:var(--border2);
+  z-index:0;
+}
+.step{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:0 12px;
+}
+.step-circle{
+  width:56px;height:56px;
+  border:1px solid var(--border2);
+  background:var(--cream2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  transition:background 0.3s,border-color 0.3s;
+  position:relative;
+}
+.step-circle::after{
+  content:'';
+  position:absolute;inset:6px;
+  background:var(--green);
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.step:hover .step-circle{border-color:var(--green);background:#fff}
+.step:hover .step-circle::after{opacity:1}
+.step-n{
+  font-family:var(--serif);
+  font-size:18px;font-weight:700;
+  color:var(--muted2);
+  position:relative;z-index:1;
+  transition:color 0.3s;
+}
+.step:hover .step-n{color:#fff}
+.step-title{
+  font-family:var(--serif);
+  font-size:16px;font-weight:600;
+  color:var(--dark);margin-bottom:6px;
+}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* ─── GEO ─── */
+.geo{background:var(--cream)}
+
+.geo-inner{
+  display:grid;grid-template-columns:5fr 7fr;
+  gap:80px;align-items:start;
+  margin-top:72px;
+}
+
+.geo-left p{
+  font-size:15px;font-weight:300;
+  color:var(--muted);line-height:1.9;
+  margin-top:16px;margin-bottom:32px;
+}
+
+.geo-callout{
+  background:var(--dark);
+  padding:32px;
+  display:flex;flex-direction:column;gap:4px;
+  margin-bottom:8px;
+}
+.geo-callout-n{
+  font-family:var(--serif);
+  font-size:48px;font-weight:700;
+  color:#fff;line-height:1;
+}
+.geo-callout-n span{color:var(--green)}
+.geo-callout-l{font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px}
+
+.geo-other{
+  background:var(--cream3);
+  padding:20px 24px;
+  font-size:13px;color:var(--muted);
+  border-left:3px solid var(--amber);
+  line-height:1.7;
+}
+.geo-other strong{color:var(--dark);font-weight:600}
+
+.regions{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;background:var(--border);
+  border:1px solid var(--border2);
+}
+.region{
+  background:var(--cream);
+  padding:20px 24px;
+  display:flex;align-items:center;gap:14px;
+  transition:background 0.2s;
+}
+.region:hover{background:#fff}
+.r-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.r-body{}
+.r-name{font-size:14px;font-weight:500;color:var(--dark)}
+.r-tag{font-size:11px;color:var(--muted);margin-top:1px}
+.region.primary .r-dot{background:var(--green);box-shadow:0 0 0 3px rgba(74,124,53,0.15)}
+.region.primary .r-name{font-weight:600}
+.region.secondary .r-dot{background:var(--amber)}
+
+/* ─── CTA ─── */
+.cta-section{
+  background:var(--green);
+  padding:100px 0;
+  position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,transparent 40px,
+    rgba(255,255,255,0.02) 40px,rgba(255,255,255,0.02) 41px
+  );
+}
+.cta-inner{
+  position:relative;z-index:1;
+  max-width:680px;margin:0 auto;text-align:center;
+}
+.cta-inner h2{
+  font-family:var(--serif);
+  font-size:clamp(36px,5vw,62px);
+  font-weight:300;
+  color:#fff;line-height:1.15;
+  margin-bottom:16px;
+}
+.cta-inner h2 strong{font-weight:700}
+.cta-inner p{
+  font-size:16px;font-weight:300;
+  color:rgba(255,255,255,0.65);
+  margin-bottom:48px;line-height:1.8;
+}
+.cta-phone-big{
+  font-family:var(--serif);
+  font-size:clamp(32px,5vw,54px);
+  font-weight:600;
+  color:#fff;
+  text-decoration:none;
+  display:block;
+  margin-bottom:16px;
+  transition:opacity 0.2s;
+}
+.cta-phone-big:hover{opacity:0.8}
+.cta-note{font-size:13px;color:rgba(255,255,255,0.45)}
+
+/* ─── CONTACTS ─── */
+.contacts{background:var(--dark2);padding:80px 0}
+
+.contacts-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.04);
+  margin-top:56px;
+}
+.contact-block{
+  padding:40px 44px;
+  transition:background 0.25s;
+}
+.contact-block:hover{background:rgba(255,255,255,0.03)}
+.cb-label{
+  font-size:10px;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);margin-bottom:12px;
+}
+.cb-val{
+  font-family:var(--serif);
+  font-size:24px;font-weight:600;
+  color:#fff;text-decoration:none;
+  display:block;margin-bottom:6px;
+  transition:color 0.2s;
+}
+.cb-val:hover{color:var(--green)}
+.cb-sub{font-size:13px;color:rgba(255,255,255,0.3)}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--dark);
+  padding:32px 60px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid rgba(255,255,255,0.04);
+  flex-wrap:wrap;gap:16px;
+}
+.footer-logo{
+  font-family:var(--serif);
+  font-size:18px;font-weight:600;
+  color:rgba(255,255,255,0.6);
+}
+.footer-logo span{color:var(--green)}
+.footer-copy{font-size:12px;color:rgba(255,255,255,0.2)}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.8s cubic-bezier(0.4,0,0.2,1),transform 0.8s cubic-bezier(0.4,0,0.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+
+/* ─── MOBILE ─── */
+@media(max-width:960px){
+  nav{padding:0 24px}
+  .nav-menu{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:120px 28px 60px}
+  .hero-right{height:300px}
+  .about-inner,.services-intro,.geo-inner{grid-template-columns:1fr;gap:40px}
+  .process-steps{grid-template-columns:1fr 1fr;gap:32px}
+  .process-line{display:none}
+  .step{align-items:flex-start;text-align:left;flex-direction:row;gap:16px}
+  .step-circle{flex-shrink:0}
+  .contacts-grid{grid-template-columns:1fr}
+  .container{padding:0 24px}
+  .section{padding:80px 0}
+  footer{padding:24px}
+  .regions{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 18L12 6L21 18H3Z" fill="rgba(74,124,53,0.8)" stroke="rgba(74,124,53,1)" stroke-width="0.5"/>
+        <rect x="9" y="14" width="6" height="4" fill="rgba(255,255,255,0.3)"/>
+      </svg>
+    </div>
+    <span class="logo-name">Сруб<span>Мастер</span></span>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#process">Процесс</a></li>
+    <li><a href="#geo">География</a></li>
+  </ul>
+  <a href="tel:+79001234567" class="nav-phone">+7 (900) 123-45-67</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-left-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      Владимирская область · с 2008 года
+    </div>
+    <h1 class="hero-h1">
+      <em>Деревянное</em>
+      <strong>строитель-<br>ство</strong>
+    </h1>
+    <p class="hero-desc">Срубы, бани и дома из живого дерева. Строим на совесть — с фиксированной ценой и гарантией на каждый этап.</p>
+    <div class="hero-actions">
+      <a href="#contacts" class="btn-main">
+        Получить расчёт
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M11 7L8 4M11 7L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#services" class="btn-outline">
+        <div class="btn-outline-arrow">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M10 6L7 3M10 6L7 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        Наши работы
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-n">15+</div>
+        <div class="hero-stat-l">лет опыта</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">340+</div>
+        <div class="hero-stat-l">объектов</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-n">8</div>
+        <div class="hero-stat-l">областей</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img">
+      <div class="hero-img-art">
+        <div class="wood-art"></div>
+        <!-- Decorative SVG house -->
+        <svg class="house-silhouette" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+          <path d="M0 300V180L300 60L600 180V300H0Z" fill="white"/>
+          <rect x="240" y="200" width="120" height="100" fill="rgba(0,0,0,0.3)"/>
+          <rect x="100" y="210" width="70" height="50" fill="rgba(0,0,0,0.2)"/>
+          <rect x="430" y="210" width="70" height="50" fill="rgba(0,0,0,0.2)"/>
+          <path d="M150 180H450" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
+          <path d="M100 200H500" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="hero-img-overlay"></div>
+    </div>
+    <div class="hero-badge-float">
+      <div class="hbf-top">Срок строительства</div>
+      <div class="hbf-val">от 45 дней</div>
+      <div class="hbf-sub">баня под ключ с отделкой</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><div class="marquee-dot"></div>Срубы из бревна</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Бани под ключ</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Жилые дома</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Гостевые домики</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Беседки и террасы</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Фиксированная цена</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Гарантия 5 лет</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Отборный лес</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Срубы из бревна</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Бани под ключ</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Жилые дома</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Гостевые домики</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Беседки и террасы</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Фиксированная цена</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Гарантия 5 лет</div>
+    <div class="marquee-item"><div class="marquee-dot"></div>Отборный лес</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="services-intro reveal">
+      <div class="services-intro-text">
+        <div class="eyebrow"><div class="eyebrow-line"></div>Что мы строим</div>
+        <h2 class="display">Любое деревянное<br><strong>строительство</strong></h2>
+        <p>От небольшой бани до полноценного жилого дома — берёмся за любой объект и доводим до результата.</p>
+      </div>
+    </div>
+    <div class="services-grid">
+      <div class="svc reveal reveal-delay-1">
+        <div class="svc-num">01</div>
+        <div class="svc-icon">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 46V26L26 10L46 26V46H6Z" stroke="var(--green)" stroke-width="1.5" fill="var(--green-light)"/>
+            <rect x="20" y="32" width="12" height="14" stroke="var(--green)" stroke-width="1.5" fill="none"/>
+            <rect x="10" y="30" width="8" height="8" stroke="var(--muted2)" stroke-width="1" fill="none"/>
+            <rect x="34" y="30" width="8" height="8" stroke="var(--muted2)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="svc-title">Жилые дома</div>
+        <div class="svc-desc">Дома из оцилиндрованного или рубленого бревна. Тёплые, долговечные, экологичные — живёте в настоящем дереве.</div>
+        <ul class="svc-list">
+          <li>Проект под ваши нужды и участок</li>
+          <li>Фундамент, коробка, крыша</li>
+          <li>Утепление и внутренняя отделка</li>
+          <li>Гарантия на конструкцию 5 лет</li>
+        </ul>
+      </div>
+      <div class="svc reveal reveal-delay-2">
+        <div class="svc-num">02</div>
+        <div class="svc-icon">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="16" width="36" height="30" rx="2" stroke="var(--amber)" stroke-width="1.5" fill="var(--amber-light)"/>
+            <path d="M8 16L26 6L44 16" stroke="var(--amber)" stroke-width="1.5"/>
+            <rect x="20" y="30" width="12" height="16" stroke="var(--amber)" stroke-width="1" fill="none"/>
+            <circle cx="26" cy="22" r="4" stroke="var(--muted2)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="svc-title">Бани и сауны</div>
+        <div class="svc-desc">Настоящая русская баня из сруба. Держит жар, дышит, пахнет деревом. Строим под ключ с печью и предбанником.</div>
+        <ul class="svc-list">
+          <li>Сруб из сосны или осины</li>
+          <li>Установка печи, полков, вентиляции</li>
+          <li>Утепление и пароизоляция</li>
+          <li>Терраса или купель — опционально</li>
+        </ul>
+      </div>
+      <div class="svc reveal reveal-delay-3">
+        <div class="svc-num">03</div>
+        <div class="svc-icon">
+          <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="22" width="40" height="6" rx="1" fill="var(--green-light)" stroke="var(--green)" stroke-width="1.2"/>
+            <rect x="6" y="30" width="40" height="6" rx="1" fill="var(--green-light)" stroke="var(--green)" stroke-width="1.2"/>
+            <rect x="6" y="38" width="40" height="6" rx="1" fill="var(--green-light)" stroke="var(--green)" stroke-width="1.2"/>
+            <path d="M6 22L26 10L46 22" stroke="var(--green)" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="svc-title">Срубы под заказ</div>
+        <div class="svc-desc">Готовые срубы любых размеров: беседки, гостевые дома, хозпостройки. Изготавливаем и собираем на вашем участке.</div>
+        <ul class="svc-list">
+          <li>Любая форма и планировка</li>
+          <li>Отборный лес зимней рубки</li>
+          <li>Доставка по региону включена</li>
+          <li>Быстрый монтаж от 2 недель</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+  <div class="about-bg-text">ДЕРЕВО</div>
+  <div class="container">
+    <div class="about-inner">
+      <div class="reveal">
+        <div class="eyebrow"><div class="eyebrow-line"></div>Почему нас выбирают</div>
+        <h2 class="display">15 лет строим —<br><em>репутация</em><br><strong>дороже рекламы</strong></h2>
+        <p class="about-text">Работаем с 2008 года. За это время построили более 340 объектов и ни разу не пропали с деньгами клиента. Каждый дом — наша визитная карточка.</p>
+      </div>
+      <div class="about-vals reveal reveal-delay-2">
+        <div class="about-val">
+          <div class="about-val-n">01</div>
+          <div>
+            <div class="about-val-title">Свой лес, без посредников</div>
+            <div class="about-val-desc">Работаем с проверенными делянками Владимирской области. Вы платите за дерево, а не за накрутку перекупщиков.</div>
+          </div>
+        </div>
+        <div class="about-val">
+          <div class="about-val-n">02</div>
+          <div>
+            <div class="about-val-title">Постоянная бригада</div>
+            <div class="about-val-desc">Опытные плотники со стажем от 8 лет. Не набираем случайных людей под сезон.</div>
+          </div>
+        </div>
+        <div class="about-val">
+          <div class="about-val-n">03</div>
+          <div>
+            <div class="about-val-title">Фиксированная смета</div>
+            <div class="about-val-desc">Цена согласована до начала работ и прописана в договоре. Никаких доплат по ходу стройки.</div>
+          </div>
+        </div>
+        <div class="about-val">
+          <div class="about-val-n">04</div>
+          <div>
+            <div class="about-val-title">Фотоотчёт каждую неделю</div>
+            <div class="about-val-desc">Держим вас в курсе — присылаем фото с объекта и отвечаем на вопросы без исчезновений.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section process" id="process">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
+      <div class="eyebrow" style="justify-content:center"><div class="eyebrow-line"></div>Как мы работаем<div class="eyebrow-line"></div></div>
+      <h2 class="display">От звонка до<br><strong>новоселья</strong></h2>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-line"></div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">1</span></div>
+        <div class="step-title">Звонок</div>
+        <div class="step-desc">Обсуждаем задачу, размеры, бюджет — бесплатно</div>
+      </div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">2</span></div>
+        <div class="step-title">Смета</div>
+        <div class="step-desc">Готовим расчёт стоимости за 1–2 дня</div>
+      </div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">3</span></div>
+        <div class="step-title">Договор</div>
+        <div class="step-desc">Фиксируем сроки и цену. Всё прозрачно.</div>
+      </div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">4</span></div>
+        <div class="step-title">Стройка</div>
+        <div class="step-desc">Работаем по графику, отчитываемся еженедельно</div>
+      </div>
+      <div class="step">
+        <div class="step-circle"><span class="step-n">5</span></div>
+        <div class="step-title">Сдача</div>
+        <div class="step-desc">Принимаете объект, получаете гарантию и документы</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GEO -->
+<section class="section geo" id="geo">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow"><div class="eyebrow-line"></div>География работ</div>
+      <h2 class="display">Работаем в радиусе<br><strong>300 км</strong> от Владимира</h2>
+    </div>
+    <div class="geo-inner">
+      <div class="reveal">
+        <p>Выезжаем на объект по всем перечисленным областям. Стоимость выезда включена в смету.</p>
+        <div class="geo-callout">
+          <div class="geo-callout-n">8 <span>областей</span></div>
+          <div class="geo-callout-l">полное покрытие — до 300 км от Владимира</div>
+        </div>
+        <div class="geo-other">
+          <strong>Другие регионы?</strong><br>
+          Узнайте по телефону — в ряде случаев выезжаем дальше 300 км.
+        </div>
+      </div>
+      <div class="regions reveal reveal-delay-1">
+        <div class="region primary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Владимирская область</div>
+            <div class="r-tag">Основной регион</div>
+          </div>
+        </div>
+        <div class="region primary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Московская область</div>
+            <div class="r-tag">Основной регион</div>
+          </div>
+        </div>
+        <div class="region secondary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Ярославская область</div>
+            <div class="r-tag">~220 км</div>
+          </div>
+        </div>
+        <div class="region secondary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Ивановская область</div>
+            <div class="r-tag">~110 км</div>
+          </div>
+        </div>
+        <div class="region secondary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Костромская область</div>
+            <div class="r-tag">~290 км</div>
+          </div>
+        </div>
+        <div class="region secondary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Нижегородская область</div>
+            <div class="r-tag">~240 км</div>
+          </div>
+        </div>
+        <div class="region secondary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Рязанская область</div>
+            <div class="r-tag">~200 км</div>
+          </div>
+        </div>
+        <div class="region secondary">
+          <div class="r-dot"></div>
+          <div class="r-body">
+            <div class="r-name">Тульская область</div>
+            <div class="r-tag">~280 км</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <h2>Хотите узнать<br><strong>стоимость?</strong></h2>
+      <p>Расчёт бесплатно — ответим в течение часа в рабочее время. Никаких обязательств.</p>
+      <a href="tel:+79001234567" class="cta-phone-big">+7 (900) 123-45-67</a>
+      <div class="cta-note">Пн–Сб · 8:00 — 20:00 · Также WhatsApp и Telegram</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow" style="color:rgba(255,255,255,0.3)"><div class="eyebrow-line" style="background:rgba(255,255,255,0.15)"></div>Контакты</div>
+      <h2 class="display" style="color:#fff">Обсудим<br><strong>ваш проект</strong></h2>
+    </div>
+    <div class="contacts-grid reveal">
+      <div class="contact-block">
+        <div class="cb-label">Телефон</div>
+        <a href="tel:+79001234567" class="cb-val">+7 (900) 123-45-67</a>
+        <div class="cb-sub">Пн–Сб с 8:00 до 20:00</div>
+      </div>
+      <div class="contact-block">
+        <div class="cb-label">WhatsApp · Telegram</div>
+        <a href="https://wa.me/79001234567" class="cb-val">+7 (900) 123-45-67</a>
+        <div class="cb-sub">Отвечаем быстро, в любое время</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Сруб<span>Мастер</span></div>
+  <div class="footer-copy">© 2025 СрубМастер · Владимирская область</div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('solid',window.scrollY>60);
+});
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+  });
+});
+</script>
+</body>
+</html>
